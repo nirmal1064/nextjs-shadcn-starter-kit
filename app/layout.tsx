@@ -1,5 +1,7 @@
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ReactNode } from "react";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -18,17 +20,22 @@ export const metadata: Metadata = {
   description: "Next JS Starter Kit with ShadCN UI",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+type Props = Readonly<{ children: ReactNode }>;
+
+export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
